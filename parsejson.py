@@ -51,12 +51,16 @@ def read_large_json_to_str(file, max_lnum=100):
                 break
 
 # Set paths
-FILE_PATH = "./RC_2018-01"
-DATA_PATH = "./Data/"
+#FILE_PATH = "./sample_data.json"
+FILE_PATH = "./RC_2018-01.json"
+#DATA_PATH = "./Data/"
 out_file_path = "./data.csv"
 
 # State the columns of the entry we want
-wanted_columns = ["author", "body", "subreddit"]
+wanted_columns = ["subreddit", "author", "body"]
+
+# State the subreddits we want
+wanted_subreddits = ["ADHD", "adhdmeme", "Anxiety", "anxietymemes", "depression", "depression_memes"]
 
 # Read each entry of the dataset
 for entry in read_large_json_to_str(FILE_PATH):
@@ -65,19 +69,23 @@ for entry in read_large_json_to_str(FILE_PATH):
     data = json.loads(entry)
 
     # If the comment has been removed, ignore
-    if data["body"] == "[removed]":
+    if data["body"] == "[removed]" or data["body"] == "[deleted]":
+        continue
+
+    # Determine if comment pertains to wanted subreddit
+    if data["subreddit"] not in wanted_subreddits:
         continue
 
     # Select only those columns from the entry
     wanted_data = {key:[data[key]] for key in data if key in wanted_columns}
-    wanted_data = [wanted_data[key] for key in wanted_data]
+    #wanted_data = [wanted_data[key] for key in wanted_data]
 
     # Open output file to append to
     with open(out_file_path, 'a') as out_file:
     
         # For each datapoint we want add entry to csv
-        for data in wanted_data:
-            out_file.write(f"{data},")
+        for column in wanted_columns:
+            out_file.write(f"{wanted_data[column]},")
 
         # Add new line to end this entry
         out_file.write(f"\n")
