@@ -13,7 +13,7 @@ INDEX_MAP = {
 }
 
 # Open data file
-with open(FILE_PATH, 'rw') as data_file:
+with open(FILE_PATH, 'r+') as data_file:
 
     # Get first line
     line = data_file.readline()
@@ -57,3 +57,6 @@ with open(FILE_PATH, 'rw') as data_file:
         # Store DAS in data.csv
         line = f"{line}{d},{a},{s},"
         data_file.writelines(line)
+
+        # Get next line
+        line = data_file.readline()
