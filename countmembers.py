@@ -1,6 +1,6 @@
 
-import numpy as np
 
+from tabulate import tabulate
 
 FILE_PATH = "./data.csv"
 
@@ -103,11 +103,6 @@ for k in range(len(average_author_per_subreddit_comments)):
 print(f"Total comments: {total_comments}")
 print(f"Total authors: {total_authors}")
 print(f"Average number of comments per author: {average_author_comments}")
-"""padding_size = max(map(lambda x: len(x), [key for key in INDEX_MAP]))
-s = "Subreddit"
-while len(s) < padding_size:
-    s += " "
-print(f"{s}\t|\tAvg.\t|\tComments\t|\tAuthors")"""
 
 tmp = [
     [
@@ -119,17 +114,4 @@ tmp = [
     for subreddit in INDEX_MAP
 ]
 
-from tabulate import tabulate
-
 print(tabulate(tmp, headers = ["Subreddit", "Avg.", "Comments", "Authors"]))
-
-"""
-for subreddit in INDEX_MAP:
-    str = f"{average_author_per_subreddit_comments[INDEX_MAP[subreddit]]:.2f}"
-    str = f"{str}\t|\t{counter_comments[INDEX_MAP[subreddit]]:d}"
-    str = f"{str}\t|\t{counter_unique_authors[INDEX_MAP[subreddit]]:d}"
-    while len(subreddit) < padding_size:
-        subreddit += " "
-    str = f"{subreddit}\t|\t{str}"
-    print(str)
-"""
