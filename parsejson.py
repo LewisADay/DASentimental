@@ -22,8 +22,6 @@ with open(FILE_PATH, 'r') as source_file:
     # Read each entry of the dataset
     while line:
 
-        print(line)
-
         # Remove any trailing whitespace
         line = line.rstrip()
 
