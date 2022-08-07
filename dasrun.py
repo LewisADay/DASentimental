@@ -74,6 +74,8 @@ with open(FILE_PATH, 'r+') as data_file:
 
 
 for subreddit in INDEX_MAP:
+    if counter_comments[INDEX_MAP[subreddit]] == 0:
+        continue
     depression_scores[INDEX_MAP[subreddit]] = depression_scores[INDEX_MAP[subreddit]] / counter_comments[INDEX_MAP[subreddit]]
     anxiety_scores[INDEX_MAP[subreddit]] = anxiety_scores[INDEX_MAP[subreddit]] / counter_comments[INDEX_MAP[subreddit]]
     stress_scores[INDEX_MAP[subreddit]] = stress_scores[INDEX_MAP[subreddit]] / counter_comments[INDEX_MAP[subreddit]]
