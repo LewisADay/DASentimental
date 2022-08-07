@@ -1,5 +1,6 @@
 
 import DASentimentalT
+from tabulate import tabulate
 
 FILE_PATH = "./tmpdata.csv"
 
@@ -11,6 +12,12 @@ INDEX_MAP = {
     "adhdmeme": 4,
     "anxietymemes": 5
 }
+
+counter_comments = [0, 0, 0, 0, 0, 0]
+
+depression_scores = [0, 0, 0, 0, 0, 0]
+anxiety_scores = [0, 0, 0, 0, 0, 0]
+stress_scores = [0, 0, 0, 0, 0, 0]
 
 # Open data file
 with open(FILE_PATH, 'r+') as data_file:
@@ -54,9 +61,32 @@ with open(FILE_PATH, 'r+') as data_file:
         # Get DAS score for this comment
         d, a, s = DASentimentalT.ret_results(body)
 
-        # Store DAS in data.csv
-        line = f"{line}{d},{a},{s},"
-        data_file.writelines(line)
+        # Collate the scores
+        depression_scores[INDEX_MAP[subreddit]] += d
+        anxiety_scores[INDEX_MAP[subreddit]] += a
+        stress_scores[INDEX_MAP[subreddit]] += s
+
+        # Increment counter
+        counter_comments[INDEX_MAP[subreddit]] += 1
 
         # Get next line
         line = data_file.readline()
+
+
+for subreddit in INDEX_MAP:
+    depression_scores[INDEX_MAP[subreddit]] = depression_scores[INDEX_MAP[subreddit]] / counter_comments[INDEX_MAP[subreddit]]
+    anxiety_scores[INDEX_MAP[subreddit]] = anxiety_scores[INDEX_MAP[subreddit]] / counter_comments[INDEX_MAP[subreddit]]
+    stress_scores[INDEX_MAP[subreddit]] = stress_scores[INDEX_MAP[subreddit]] / counter_comments[INDEX_MAP[subreddit]]
+
+tmp = [
+    [
+        subreddit,
+        f"{depression_scores[INDEX_MAP[subreddit]]:.2f}",
+        f"{anxiety_scores[INDEX_MAP[subreddit]]:.2f}",
+        f"{stress_scores[INDEX_MAP[subreddit]]:.2f}"
+    ]
+    for subreddit in INDEX_MAP
+]
+
+print(tabulate(tmp, headers = ["Subreddit", "Avg. D", "Avg. A", "Avg. S"]))
+
