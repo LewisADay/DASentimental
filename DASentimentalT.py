@@ -231,10 +231,11 @@ def ret_results(text):
     return depression, anxiety, stress
 
 
-read = sys.argv[1]
-f = open(read, "r")
-d, a, s = ret_results(f.read())
-f.close()
-f = open(sys.argv[2], "w")
-f.write('Depression:{0}\nAnxiety:{1}\nStress:{2}'.format(d, a, s))
-f.close()
+if __name__ == "__main__":
+    read = sys.argv[1]
+    f = open(read, "r")
+    d, a, s = ret_results(f.read())
+    f.close()
+    f = open(sys.argv[2], "w")
+    f.write('Depression:{0}\nAnxiety:{1}\nStress:{2}'.format(d, a, s))
+    f.close()
