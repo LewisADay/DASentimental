@@ -1,8 +1,9 @@
 
-
 from tabulate import tabulate
+import numpy as np
+import networkx as nx
 
-FILE_PATH = "./data.csv"
+FILE_PATH = "./tmpdata.csv"
 
 INDEX_MAP = {
     "depression": 0,
@@ -115,3 +116,49 @@ tmp = [
 ]
 
 print(tabulate(tmp, headers = ["Subreddit", "Avg.", "Comments", "Authors"]))
+
+subreddit_pairs = []
+
+for s1 in INDEX_MAP:
+    for s2 in INDEX_MAP:
+        if s1 == s2:
+            continue
+        if [s1, s2] in subreddit_pairs or [s2, s1] in subreddit_pairs:
+            continue
+        subreddit_pairs.append([s1, s2])
+
+subreddit_pairs = np.array(subreddit_pairs)
+counter_shared_authors = np.zeros(shape=subreddit_pairs.shape)
+
+for author in author_contributions:
+    subreddits = author_contributions[author]
+
+    for s1 in [key for key in subreddits if subreddits[key] != 0]:
+        for s2 in [key for key in subreddits if subreddits[key] != 0]:
+            if s1 == s2:
+                continue
+
+            if [s1, s2] in subreddit_pairs:
+                counter_shared_authors[subreddit_pairs == [s1, s2]] += 1
+
+            if [s2, s1] in subreddit_pairs:
+                counter_shared_authors[subreddit_pairs == [s2, s1]] += 1
+
+G = nx.empty_graph(6)
+
+edge_sizes = counter_shared_authors / total_authors
+edge_sizes = edge_sizes * 1000
+
+for [s1, s2] in subreddit_pairs:
+    weight = edge_sizes[subreddit_pairs == [s1, s2]]
+    G.add_weighted_edges_from([(INDEX_MAP[s1], INDEX_MAP[s2]), weight])
+
+node_sizes = np.array(counter_unique_authors) / total_comments
+node_sizes = node_sizes * 1000
+nx.draw_networkx_nodes(G, pos=nx.spring_layout(G), node_size=node_sizes)
+
+for [s1, s2] in subreddit_pairs:
+    weight = edge_sizes[subreddit_pairs == [s1, s2]]
+    nx.draw_networkx_edges(G, pos=nx.spring_layout(G), edgelist=[(INDEX_MAP[s1], INDEX_MAP[s2])], width=weight/10)
+
+nx.draw_networkx_labels(G, pos=nx.spring_layout(G), labels={INDEX_MAP[lab]: f"r/{lab}" for lab in INDEX_MAP})
