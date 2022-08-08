@@ -2,6 +2,7 @@
 from tabulate import tabulate
 import numpy as np
 import networkx as nx
+import matplotlib.pyplot as plt
 
 FILE_PATH = "./tmpdata.csv"
 
@@ -162,3 +163,5 @@ for [s1, s2] in subreddit_pairs:
     nx.draw_networkx_edges(G, pos=nx.spring_layout(G), edgelist=[(INDEX_MAP[s1], INDEX_MAP[s2])], width=weight/10)
 
 nx.draw_networkx_labels(G, pos=nx.spring_layout(G), labels={INDEX_MAP[lab]: f"r/{lab}" for lab in INDEX_MAP})
+
+plt.show()
