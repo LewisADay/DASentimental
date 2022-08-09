@@ -4,7 +4,7 @@ import numpy as np
 import networkx as nx
 import matplotlib.pyplot as plt
 
-FILE_PATH = "./tmpdata.csv"
+FILE_PATH = "./data.csv"
 
 INDEX_MAP = {
     "depression": 0,
@@ -152,7 +152,7 @@ edge_sizes = edge_sizes * 1000
 
 for [s1, s2] in subreddit_pairs:
     weight = edge_sizes[subreddit_pairs == [s1, s2]]
-    G.add_weighted_edges_from([(INDEX_MAP[s1], INDEX_MAP[s2]), weight])
+    G.add_weighted_edges_from([(INDEX_MAP[s1], INDEX_MAP[s2], weight)])
 
 node_sizes = np.array(counter_unique_authors) / total_comments
 node_sizes = node_sizes * 1000
