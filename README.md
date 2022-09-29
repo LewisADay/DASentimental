@@ -1,4 +1,4 @@
-# LewisADay/DASentimental
+# DASentimental
 
 A fork of asrafaiz7/DASentimental, using DASentimental to perform basic sentiment analysis on a dataset of Reddit comments from various mental health related subreddits and their `meme' subreddit equivalents. The subsequent analysis showed that the meme subreddits tend to have broadly similar DAS scores to their more serious counterparts, though all the meme subreddits score less in the Depression metric, indicating, as one might expect, that a forum rife with jokes, is a slightly cheerier place that a forum for discussion on the same topic.
 
