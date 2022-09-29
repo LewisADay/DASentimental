@@ -4,7 +4,7 @@ A fork of asrafaiz7/DASentimental, using DASentimental to perform basic sentimen
 
 ### Dataset
 
-The source for the dataset was https://files.pushshift.io/reddit/comments/, from which the dataset for (__month and year__) was used in this project. As we are only interested in select subreddits we then filtered the dataset and extracted the relevant comments into the dataset found in tmpdata.json. To understand the format of the data the creators of the dataset provided sample_data.json, which demonstrates the format and style of the data, without needing to manage dealing with enormous json files.
+The source for the dataset was https://files.pushshift.io/reddit/comments/, from which the dataset for Jan-Mar 2020 was used in this project. As we are only interested in select subreddits we then filtered the dataset and extracted the relevant comments into the dataset found in tmpdata.json. To understand the format of the data the creators of the dataset provided sample_data.json, which demonstrates the format and style of the data, without needing to manage dealing with enormous json files.
 
 ### Use
 
